@@ -3,7 +3,7 @@ import sys
 license = ''
 if sys.platform == "linux" or sys.platform == "linux2":
     # linux
-    license = 't0068NQAAAJUlQ1oDc6zPWxOAQWn7kD9EGtgZFIqK/k3ULJC5ccG9Xe/lpVOxod82bm6nXxqQXUpC1zjRXU514mWw9XLE1JM='
+    license = 't0127lQMAAHB5ELMdLtyN7wvYFuvlOWfIdUteVciqXOyCXHhX9b2qE8N3AJIFPtT4/R7/yTAgaJzVpxInoe2LvUwnQ7626O54Z+WunA+pzWmY0zCnYU7DTMNMw0zDTMNMwyzDLMMswyzDXO+aP1GbjUZ1E6gavtW/6eiNh8YF2F+19A=='
 elif sys.platform == "darwin":
     # OS X
     license = 't0068NQAAAKrcxSxZwCY7qwBNDJJXAG3rFcJZTDsCdTHB2TlI0f1DvBg34MazLhAqhf6D2iE60OnWk9imYMc0inxb9OXWcrY='
