@@ -107,6 +107,20 @@ initLicense(PyObject *self, PyObject *args)
     return Py_BuildValue("i", ret);
 }
 
+static void *ToHexString(unsigned char* pSrc, int iLen, char* pDest)
+{
+	const char HEXCHARS[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+	int i;
+	char* ptr = pDest;
+
+	for(i = 0; i < iLen; ++i)
+	{
+		snprintf(ptr, 4, "%c%c ", HEXCHARS[ ( pSrc[i] & 0xF0 ) >> 4 ], HEXCHARS[ ( pSrc[i] & 0x0F ) >> 0 ]);
+		ptr += 3;
+	}
+}
+
 static PyObject *createPyResults(STextResultArray *paryResult)
 {
     if (!paryResult)
@@ -124,6 +138,10 @@ static PyObject *createPyResults(STextResultArray *paryResult)
     int i = 0;
     for (; i < count; i++)
     {
+	char * pszTemp1 = NULL;
+	pszTemp1 = (char*)malloc(paryResult->ppResults[i]->nBarcodeBytesLength*3 + 1);
+	ToHexString(paryResult->ppResults[i]->pBarcodeBytes, paryResult->ppResults[i]->nBarcodeBytesLength, pszTemp1);
+
         SLocalizationResult* pLocalizationResult = paryResult->ppResults[i]->pLocalizationResult;
         int x1 = pLocalizationResult->iX1;
         int y1 = pLocalizationResult->iY1;
@@ -134,10 +152,11 @@ static PyObject *createPyResults(STextResultArray *paryResult)
         int x4 = pLocalizationResult->iX4;
         int y4 = pLocalizationResult->iY4;
 
-        PyObject* pyObject = Py_BuildValue("ssiiiiiiii", paryResult->ppResults[i]->pszBarcodeFormatString, paryResult->ppResults[i]->pszBarcodeText
+        PyObject* pyObject = Py_BuildValue("ssiiiiiiii", paryResult->ppResults[i]->pszBarcodeFormatString, pszTemp1
         , x1, y1, x2, y2, x3, y3, x4, y4);
         PyList_SetItem(list, i, pyObject); // Add results to list
 
+	free(pszTemp1);
         // Print out PyObject if needed
         if (DEBUG)
         {
