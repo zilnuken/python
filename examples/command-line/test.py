@@ -15,7 +15,7 @@ def decodeFile(fileName):
 
     for result in results:
         print("barcode format: " + result[0])
-        print("barcode value: " + result[1])
+        print("barcode value: " + bytearray.fromhex(result[1]).decode('latin-1'))
 
 
 def decodeBuffer(image):
@@ -25,7 +25,7 @@ def decodeBuffer(image):
     color = (0,255,0)
     for result in results:
         print("barcode format: " + result[0])
-        print("barcode value: " + result[1])
+        print("barcode value: " + bytearray.fromhex(result[1]).decode('latin-1'))
         x1 = result[2]
         y1 = result[3]
         x2 = result[4]
@@ -51,6 +51,7 @@ if __name__ == "__main__":
         barcode_image = raw_input("Enter the barcode file: ")
     else:
         barcode_image = input("Enter the barcode file: ")
+        #barcode_image = 'pdf.jpg'
 
     if not os.path.isfile(barcode_image):
         print("It is not a valid file.")
